@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="loginstyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form class="login-form" id="loginForm">
+            <h2>Login</h2>
+            <div class="input-group">
+                <label for="username">Email</label>
+                <input type="text" id="email" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="normal">Login</button>
+            <p>Don't have an account? <a href="/signup.html">Sign Up</a></p>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Accessing form elements and their values
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        console.log(email, password);
+        const formData = {
+            email: email,
+            password: password
+        }
+
+        console.log(formData);
+
+        axios.post("http://localhost:3000/login", formData)
+            .then(function (response) {
+                console.log(response.data);
+                localStorage.setItem("isLoggedIn", "true")
+                window.location.href = "/index.html";
+            })
+            .catch(function (error) {
+                console.error(error);
+                // Handle errors here
+            });
+    });
+</script>
+</html>

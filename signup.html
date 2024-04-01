@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <link rel="stylesheet" href="signupStyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <form class="signup-form" id="signupForm">
+            <h2>Sign Up</h2>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="conPassword">Confirm Password</label>
+                <input type="password" id="conPassword" name="conPassword" required>
+            </div>
+            <button type="submit" class="normal">Sign Up</button>
+            <p>Already have an account? <a href="/login.html">Login</a></p>
+        </form>
+    </div>
+    
+</body>
+
+<script>
+    document.getElementById("signupForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Accessing form elements and their values
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const conPassword = document.getElementById("conPassword").value;
+
+        console.log(email, password, conPassword);
+        const formData = {
+            email: email,
+            password: password
+        }
+
+        console.log(formData);
+
+        axios.post("http://localhost:3000/signup", formData)
+            .then(function (response) {
+                console.log(response.data);
+                // Redirect to success page
+                window.location.href = "/login.html";
+            })
+            .catch(function (error) {
+                console.error(error);
+                // Handle errors here
+            });
+    });
+</script>
+
+</html>
